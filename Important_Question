@@ -65,3 +65,13 @@ by default  ascending order.
 we want to control the sort order as a default of the data model? We can specify that at table creation time using the CLUSTERING 
 ORDER BY clause:
 
+--------------------------------------------------------------------------------------------------------------------------------
+Q)What is SEED Node in cassandra?
+--------------------------------------------------------------------------------------------------------------------------------
+A new node in a cluster needs what’s called a seed node.
+A seed node is used as a contact point for other nodes,
+so Cassandra can learn the topology of the cluster—that is,what hosts have what ranges. 
+For example, if node A acts as a  seed for node B,when node B comes online, it will use node A as a reference point 
+from which to get data.
+This process is known as bootstrapping or sometimes auto bootstrapping because it is an operation that Cassandra performs automatically.
+
