@@ -1,0 +1,17 @@
+cassandra.bat
+
+nodetool status
+
+create keyspace hr with replication={'class':'SimpleStrategy', 'replication_factor':1};
+use hr;
+
+create table emp(empid int primary key,emp_first varchar,emp_last varchar,emp_dept varchar);
+
+insert into emp (empid, emp_first, emp_last, emp_dept)values (1, 'Fred', 'Smith', 'HR');
+insert into emp (empid, emp_first, emp_last, emp_dept)values (2, 'Mary', 'Taylor', 'HR');
+insert into emp (empid, emp_first, emp_last, emp_dept)values (3, 'Bob', 'Jackson', 'Eng');
+
+select * from emp;
+
+nodetool -h localhost ring
+
