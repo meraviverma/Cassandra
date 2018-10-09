@@ -1,4 +1,5 @@
-									primary key vs Partition key vs Clustering columns
+									
+								primary key vs Partition key vs Clustering columns
 							----------------------------------------------------------------
 							
 https://www.datastax.com/dev/blog/the-most-important-thing-to-know-in-cassandra-data-modeling-the-primary-key
@@ -8,7 +9,8 @@ The primary key in Cassandra usually consists of two parts - Partition key and C
 
 primary_key((partition_key), clustering_col )
 
-Partition key - The first part of the primary key. The main aim of a partition key is to identify the node which stores the particular row. 
+Partition key - The first part of the primary key. The main aim of a partition key is to identify the node which stores the particular 
+row. 
 
 CREATE TABLE phone_book (
 phone_num int,
@@ -17,7 +19,8 @@ age int,
 city text,
 PRIMARY KEY ((phone_num, name), age);
 
-Here, (phone_num, name) is the partition key. While inserting the data, the hash value of the partition key is generated and this value decides which node the 
+Here, (phone_num, name) is the partition key. While inserting the data, the hash value of the partition key is generated and this value 
+decides which node the 
 row should go into.
 
 Consider a 4 node cluster, each node has a range of hash values it can store.
@@ -39,19 +42,23 @@ say, hash value(7826573732, ‘Joey’) → 12 , now, this row will be inserted 
 SELECT * FROM phone_book
 WHERE phone_num=7826573732 and name=’Joey’;
 
-Now, again the hash value of the partition key (7826573732,’Joey’) is calculated, which is 12 in our case which resides in Node C, from which the read is done.
+Now, again the hash value of the partition key (7826573732,’Joey’) is calculated, which is 12 in our case which resides in Node C, 
+from which the read is done.
 
-2. Clustering columns - Second part of the primary key. The main purpose of having clustering columns is to store the data in a sorted order. 
+2. Clustering columns - Second part of the primary key. The main purpose of having clustering columns is to store the data in a 
+sorted order. 
 By default, the order is ascending.
 
 There can be more than one partition key and clustering columns in a primary key depending on the query you are solving.
 
 primary_key((pk1, pk2), col 1,col2)
 
-An imperfect metaphor for how Cassandra organizes its data is a hash table where each entry maps to sorted collection that stores the actual data. 
+An imperfect metaphor for how Cassandra organizes its data is a hash table where each entry maps to sorted collection that stores 
+the actual data. 
 The partition key is the key for the hash table, and the clustering key is sort key for the collections.
 
-Where the partition key is important for data locality, the clustering column specifies the order that the data is arranged inside the partition.
+Where the partition key is important for data locality, the clustering column specifies the order that the data is arranged inside 
+the partition.
 
 Controlling order of the clustering columns
 -------------------------------------------------
